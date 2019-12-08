@@ -8,8 +8,8 @@ This library is an extraction from Fullscript. We originally wrote this at a tim
 Our main design decisions centered around 3 principles.
 
 - Speed. Slow stuff happens at boot time rather than at runtime. 
-- Simple DSL. We've opted for a very simple DSL. Mostly to avoid any meta-programming slowness (no has_many, belongs_to, etc. that you see in most serializers) but we also wanted an early-career developer pick up FTL without much effort.
-- Flexibility. You should be able to serialize data to an existing spec (like JSON:API) or come up with your own.
+- Simple DSL. We've opted for a very simple DSL. Mostly to avoid any meta-programming slowness (no has_many, belongs_to, etc. that you see in most serializers) but we also wanted an early-career developer to pick up FTL without much effort.
+- Flexibility. You should be able to serialize data to an existing spec (like JSON:API) or come up with your own. 
 
 
 ## Installation
