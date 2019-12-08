@@ -165,7 +165,7 @@ end
 
 Custom attributes can be overridden by defining a method.
 
-The object (that is passed into the serializer) is be referred to as `obj`.
+The object (that is passed into the serializer) is referrenced to as `obj`.
 
 ```ruby
 class FastestHunkOfJunkInTheGalaxy < FTL::Serializer::Base
