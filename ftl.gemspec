@@ -9,21 +9,17 @@ Gem::Specification.new do |spec|
   spec.name          = "ftl-serializer"
   spec.version       = FTL::VERSION
   spec.authors       = ["Fullscript"]
-  spec.email         = ["api@fullscript.com", ]
+  spec.email         = ["devops@fullscript.com", ]
 
   spec.summary       = 'A ruby serializer that can make the kessel run in less than 12 parsecs.'
   spec.description   = 'FTL (Faster Than Light) is a ruby serializer that is optimized for simplicity and speed.'
   spec.homepage      = "https://fullscript.com"
   spec.license       = "MIT"
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "Set to 'https://fullscript.com'"
-
     spec.metadata["homepage_uri"] = spec.homepage
-    spec.metadata["source_code_uri"] = "https://github.com/fullscript/ftl"
-    spec.metadata["changelog_uri"] = "https://github.com/fullscript/ftl/changelog.md"
+    spec.metadata["source_code_uri"] = "https://github.com/fullscript/ftl-serializer"
+    # spec.metadata["changelog_uri"] = "https://github.com/fullscript/ftl-serializer/changelog.md"
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
