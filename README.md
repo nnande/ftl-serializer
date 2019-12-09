@@ -28,7 +28,7 @@ Or install it yourself as:
 
     $ gem install ftl-serializer
 
-Then in an initializer you just need to point to the path(s) where you're FTL serializers live.
+Then in an initializer you just need to point to the path(s) where your serializers live.
 
 ```ruby
 # app/initializers/ftl.rb
