@@ -2,14 +2,14 @@
 
 A ruby serializer that can make the kessel run in less than 12 parsecs.
 
-## Why another serializer?
-This library is an extraction from Fullscript and has been used in production for years. We originally wrote this at a time when there weren't many options out there. Serializers were mostly slow, with over-complicated DSLs, or they weren't flexible enough for our needs (for example only supporting a specific spec like JSON:API).
+## Why FTL?
+This library is an extraction from Fullscript. We originally wrote this at a time when there weren't many options out there. Serializers were mostly slow, with over-complicated DSLs, or they weren't flexible enough for our needs (for example only supporting a specific spec like JSON:API).
 
-## Features
+Our main design decisions centered around 3 principles.
 
-- Speed. Everything in here is optimized for speed
-- We've opted for a very simple DSL to avoid any meta-programming slowness (no has_many, belongs_to, etc.)
-- Flexibility. You should be able to serialize data to an existing spec or come up with your own.
+- Speed. Slow stuff happens at boot time rather than at runtime. 
+- Simple DSL. We've opted for a very simple DSL. Mostly to avoid any meta-programming slowness (no has_many, belongs_to, etc. that you see in most serializers) but we also wanted an early-career developer to pick up FTL without much effort.
+- Flexibility. You should be able to serialize data to an existing spec (like JSON:API) or come up with your own. 
 
 
 ## Installation
@@ -31,20 +31,33 @@ Or install it yourself as:
 Then in an initializer you just need to point to the path(s) where you're FTL serializers live.
 
 ```ruby
+# app/initializers/ftl.rb
+
 FTL::Configuration.serializer_paths = ["#{Rails.root.join}/app/serializers"]
 ```
 
 ## Usage
 
-### Model Definition
+### Example Rails Model
+
+For our examples here's a simple Rails Model. (Note that FTL can accept any data structure and isn't limited to models.)
 
 ```ruby
 class Ship
+  belongs_to :classification
+  
   attr_accessor :id, :name, :special_modifications
 end
 ```
 
+```ruby
+ship = Ship.new(id: 10, name: "Millenium Falcon", special_modifications: true, classification_id: 20)
+```
+
+
 ### Serializer Definition
+
+We define our serializer by inheriting from FTL::Serializer::Base
 
 ```ruby
 class FastestHunkOfJunkInTheGalaxy < FTL::Serializer::Base
@@ -56,27 +69,31 @@ class FastestHunkOfJunkInTheGalaxy < FTL::Serializer::Base
 end
 ```
 
-### Sample Object
-
-```ruby
-ship = Ship.new(id: 10, name: "Millenium Falcon", special_modifications: true, classification_id: 20)
-```
-
-### Object Serialization
-
-#### Return a hash
+#### .to_h
 
 ```ruby
 hash = FastestHunkOfJunkInTheGalaxy.new(ship).to_h
 ```
 
-#### Return Serialized JSON
+returns:
+
+```ruby
+{
+  id: "10",
+  name: "Millenium Falcon",
+  special_modifications: true,
+  type: "YT-1300 Corellian light freighter"
+}
+```
+
+
+#### .to_json
 
 ```ruby
 json_string = FastestHunkOfJunkInTheGalaxy.new(ship).to_json
 ```
 
-#### Serialized Output
+returns:
 
 ```json
 {
@@ -88,6 +105,8 @@ json_string = FastestHunkOfJunkInTheGalaxy.new(ship).to_json
 ```
 
 ### Options
+
+#### format
 
 By default FTL underscores the key names but it also supports camel case.
 
@@ -104,6 +123,8 @@ Examples:
 keys :camel # "some_key" => "someKey"
 keys :underscore # "some_key" => "some_key"
 ```
+
+#### root
 
 FTL can also support a root key.
 
@@ -134,7 +155,7 @@ FastestHunkOfJunkInTheGalaxy.new(obj).root(:disabled)
 
 ### Attributes
 
-Attributes can be defined using the `attributes` keyword.
+Attributes are defined using the `attributes` keyword.
 
 ```ruby
 class FastestHunkOfJunkInTheGalaxy < FTL::Serializer::Base
@@ -142,9 +163,9 @@ class FastestHunkOfJunkInTheGalaxy < FTL::Serializer::Base
 end
 ```
 
-Custom attributes can be overridden by using plain-old-ruby and defining a method.
+Custom attributes can be overridden by defining a method.
 
-The object (that is passed into the serializer) is be referred to as `obj`.
+The object (that is passed into the serializer) is referrenced to as `obj`.
 
 ```ruby
 class FastestHunkOfJunkInTheGalaxy < FTL::Serializer::Base
@@ -158,7 +179,7 @@ end
 
 ### Locals
 
-In some cases, you might want to use some ancillary data that's not necessarily available on your objects. For example, `current_user` or `current_store` are examples of a dependency that you may want to inject into your serializer.
+In some cases, you might want to use some ancillary data that's not necessarily available on your objects. For example, `current_user` or `current_account` are examples of a dependency that you may want to inject into your serializer.
 
 To do this you can just pass a `locals` hash into the serializer.
 
@@ -180,7 +201,7 @@ serializer.to_h
 Locals can be in a hash format or it can be chained as a method.
 
 ```ruby
-# This is the same
+# This is the same:
 FastestHunkOfJunkInTheGalaxy.new(ship, { locals: { current_pilot: lando } })
 
 # as this:
@@ -205,7 +226,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/ftl. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/fullscript/ftl-serializer. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
