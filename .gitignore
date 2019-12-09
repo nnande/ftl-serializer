@@ -12,3 +12,4 @@ TAGS
 .rspec_status
 .byebug_history
 *.gem
+Gemfile.lock
