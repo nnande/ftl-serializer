@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "bundler/setup"
-require "ftl"
+require "ftl-serializer"
 FTL::Configuration.serializer_paths = ["spec/ftl/test_examples"]
 require 'ftl/test_examples/basic_serializer'
 require 'active_support/testing/time_helpers'
