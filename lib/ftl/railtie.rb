@@ -13,20 +13,7 @@ module FTL
       end
 
       ftl_reloader = app.config.file_watcher.new([], reload_paths) do
-        FTL::Configuration.serializer_paths.map do |path|
-          Dir.glob("#{path}/**/*.rb").each do |file|
-            begin
-              if Rails.env.development? || Rails.env.test?
-                load file
-              else
-                require file
-              end
-            rescue => e
-              warn "can't load '#{file}' file (#{e.message})!"
-            end
-          end
-        end
-
+        FTL::Serializer.load_from_configured_paths
         FTL::Serializer.bootstrap!
       end
 
