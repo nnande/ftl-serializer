@@ -2,7 +2,7 @@
 
 require "ftl/version"
 require "ftl/serializer"
-require "ftl/railtie"
+require "ftl/railtie" if defined?(Rails)
 require "ftl/errors"
 require "ftl/configuration"
 require "ftl/serializer/base"

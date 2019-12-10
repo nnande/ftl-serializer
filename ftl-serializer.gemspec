@@ -33,7 +33,6 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "railties", ">= 5"
   spec.add_dependency "activesupport", ">= 5"
   spec.add_dependency "oj", '>= 2'
 
