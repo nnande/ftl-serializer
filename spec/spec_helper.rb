@@ -2,6 +2,7 @@
 
 require "bundler/setup"
 require "ftl-serializer"
+require "ftl/railtie"
 FTL::Configuration.serializer_paths = ["spec/ftl/test_examples"]
 require 'ftl/test_examples/basic_serializer'
 require 'active_support/testing/time_helpers'
