@@ -25,7 +25,7 @@ module FTL::Serializer
     alias_method :to_hash, :to_h
 
     def to_json
-      Oj.dump(to_h)
+      Oj.dump(to_hash, mode: :custom, use_to_json: false)   
     end
 
     def meta(hash)
